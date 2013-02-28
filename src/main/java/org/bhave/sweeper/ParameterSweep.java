@@ -11,5 +11,5 @@ import org.apache.commons.configuration.Configuration;
  * @author Davide Nunes
  */
 public interface ParameterSweep extends Iterable<Configuration> {
-
+	String getParameterName();
 }

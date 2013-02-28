@@ -1,5 +1,7 @@
 package org.bhave.sweeper;
 
+import org.apache.commons.configuration.Configuration;
+
 /**
  * A parameter space is a Parameter sweep for aggregated {@link ParameterSweep}
  * objects.
@@ -7,7 +9,7 @@ package org.bhave.sweeper;
  * @author Davide Nunes
  * 
  */
-public interface ParameterSpace extends ParameterSweep {
+public interface ParameterSpace extends Iterable<Configuration> {
 
 	/**
 	 * Sets the number of runs for each parameter combination. The default
@@ -24,23 +26,4 @@ public interface ParameterSpace extends ParameterSweep {
 	 * @return the number of repetitions for each parameter combination
 	 */
 	int getNumRuns();
-
-	/**
-	 * Adds a new {@link ParameterSweep} to this parameter space
-	 * 
-	 * @param sweep
-	 *            a sweep to be added to the parameter space
-	 * @return true if the sweep was successfully added
-	 */
-	boolean add(ParameterSweep sweep);
-
-	/**
-	 * Removes a given {@link ParameterSweep} from the parameter space.
-	 * 
-	 * @param sweep
-	 *            the sweep to be removed.
-	 * 
-	 * @return true of the sweep was removed.
-	 */
-	boolean remove(ParameterSweep sweep);
 }
