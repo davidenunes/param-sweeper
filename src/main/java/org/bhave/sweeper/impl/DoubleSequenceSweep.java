@@ -8,11 +8,11 @@ import org.apache.commons.collections.iterators.TransformIterator;
 import org.apache.commons.configuration.Configuration;
 import org.bhave.sweeper.SequenceSweep;
 
-public class IntegerSequenceSweep implements SequenceSweep<Integer> {
+public class DoubleSequenceSweep implements SequenceSweep<Double> {
 
-	private final int from;
-	private final int to;
-	private final int step;
+	private final double from;
+	private final double to;
+	private final double step;
 	private final String param;
 
 	/**
@@ -25,7 +25,7 @@ public class IntegerSequenceSweep implements SequenceSweep<Integer> {
 	 * @param step
 	 *            the step to update the sequence
 	 */
-	public IntegerSequenceSweep(String param, int from, int to, int step)
+	public DoubleSequenceSweep(String param, double from, double to, double step)
 			throws IllegalArgumentException {
 		this.from = from;
 		this.to = to;
@@ -47,28 +47,28 @@ public class IntegerSequenceSweep implements SequenceSweep<Integer> {
 	@SuppressWarnings("unchecked")
 	public Iterator<Configuration> iterator() {
 		TransformIterator it = new TransformIterator(
-				new IntegerSequenceIterator(), new ConfigurationTranformer(
-						param));
+				new DoubleSequenceIterator(),
+				new ConfigurationTranformer(param));
 
 		return it;
 	}
 
-	public Integer from() {
+	public Double from() {
 		return from;
 	}
 
-	public Integer to() {
+	public Double to() {
 		return to;
 	}
 
-	public Integer step() {
+	public Double step() {
 		return step;
 	}
 
-	private class IntegerSequenceIterator implements Iterator<Integer> {
-		private int currentValue;
+	private class DoubleSequenceIterator implements Iterator<Double> {
+		private double currentValue;
 
-		public IntegerSequenceIterator() {
+		public DoubleSequenceIterator() {
 			this.currentValue = from;
 		}
 
@@ -80,8 +80,8 @@ public class IntegerSequenceSweep implements SequenceSweep<Integer> {
 			return step >= 0 ? currentValue <= to : currentValue >= to;
 		}
 
-		public Integer next() {
-			int result = currentValue;
+		public Double next() {
+			double result = currentValue;
 			if (step == 0) {
 				canStep = false;
 			}
@@ -100,9 +100,9 @@ public class IntegerSequenceSweep implements SequenceSweep<Integer> {
 	/**
 	 * Constructs the whole Sequence and returns it as a list
 	 */
-	public List<Integer> getValues() {
-		Iterator<Integer> it = new IntegerSequenceIterator();
-		List<Integer> values = new ArrayList<Integer>();
+	public List<Double> getValues() {
+		Iterator<Double> it = new DoubleSequenceIterator();
+		List<Double> values = new ArrayList<Double>();
 		while (it.hasNext()) {
 			values.add(it.next());
 		}
@@ -116,13 +116,32 @@ public class IntegerSequenceSweep implements SequenceSweep<Integer> {
 	}
 
 	@Override
+	public Iterator<Double> valueIterator() {
+		return new DoubleSequenceIterator();
+	}
+
+	@Override
+	public int size() {
+		double diff = Math.abs(to - from);
+
+		if (!(to < 0 && from > 0 || to > 0 && from < 0)) {
+			diff += 1;
+		}
+		return new Double(diff / Math.abs(step)).intValue();
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + from;
+		long temp;
+		temp = Double.doubleToLongBits(from);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((param == null) ? 0 : param.hashCode());
-		result = prime * result + step;
-		result = prime * result + to;
+		temp = Double.doubleToLongBits(step);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(to);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -132,36 +151,23 @@ public class IntegerSequenceSweep implements SequenceSweep<Integer> {
 			return true;
 		if (obj == null)
 			return false;
-		
 		if (getClass() != obj.getClass())
 			return false;
-		IntegerSequenceSweep other = (IntegerSequenceSweep) obj;
-		if (from != other.from)
+		DoubleSequenceSweep other = (DoubleSequenceSweep) obj;
+		if (Double.doubleToLongBits(from) != Double
+				.doubleToLongBits(other.from))
 			return false;
 		if (param == null) {
 			if (other.param != null)
 				return false;
 		} else if (!param.equals(other.param))
 			return false;
-		if (step != other.step)
+		if (Double.doubleToLongBits(step) != Double
+				.doubleToLongBits(other.step))
 			return false;
-		if (to != other.to)
+		if (Double.doubleToLongBits(to) != Double.doubleToLongBits(other.to))
 			return false;
 		return true;
 	}
 
-	@Override
-	public Iterator<Integer> valueIterator() {
-		return new IntegerSequenceIterator();
-	}
-
-	@Override
-	public int size() {
-		int diff = Math.abs(to - from);
-
-		if (!(to < 0 && from > 0 || to > 0 && from < 0)) {
-			diff++;
-		}
-		return diff / Math.abs(step);
-	}
 }
