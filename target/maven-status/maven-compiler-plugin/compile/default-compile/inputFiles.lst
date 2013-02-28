@@ -1,8 +1,0 @@
-/home/davide/workspace/bhave.sweeper/src/main/java/org/bhave/sweeper/ParameterSpace.java
-/home/davide/workspace/bhave.sweeper/src/main/java/org/bhave/sweeper/impl/ConfigurationTranformer.java
-/home/davide/workspace/bhave.sweeper/src/main/java/org/bhave/sweeper/impl/SingleValueSweep.java
-/home/davide/workspace/bhave.sweeper/src/main/java/org/bhave/sweeper/ParameterSweep.java
-/home/davide/workspace/bhave.sweeper/src/main/java/org/bhave/sweeper/impl/CombinedParameterSweep.java
-/home/davide/workspace/bhave.sweeper/src/main/java/org/bhave/sweeper/ListSweep.java
-/home/davide/workspace/bhave.sweeper/src/main/java/org/bhave/sweeper/SequenceSweep.java
-/home/davide/workspace/bhave.sweeper/src/main/java/org/bhave/sweeper/impl/IntegerSequenceSweep.java
