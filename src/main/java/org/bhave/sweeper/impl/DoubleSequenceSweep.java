@@ -124,10 +124,10 @@ public class DoubleSequenceSweep implements SequenceSweep<Double> {
 	public int size() {
 		double diff = Math.abs(to - from);
 
-		if (!(to < 0 && from > 0 || to > 0 && from < 0)) {
-			diff += 1;
-		}
-		return new Double(diff / Math.abs(step)).intValue();
+		int size = (int) Math.floor((diff / Math.abs(step)));
+
+		return (!(to < 0 && from > 0 || to > 0 && from < 0)) ? (size + 1)
+				: size;
 	}
 
 	@Override
