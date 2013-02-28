@@ -13,7 +13,7 @@ public class IntegerSequenceSweepTest {
 
 	@Test
 	public void test() {
-		IntegerSequenceSweep seq = new IntegerSequenceSweep("p1", 10, -10, -1);
+		IntegerSequenceSweep seq = new IntegerSequenceSweep("p1", -10, 10, 1);
 		System.out.println(seq);
 		List<Integer> values = seq.getValues();
 		System.out.println(values);
@@ -22,6 +22,11 @@ public class IntegerSequenceSweepTest {
 		for (Configuration config : seq) {
 			assertEquals(valuesIt.next().intValue(), config.getInt("p1"));
 		}
+
+		assertEquals(20, seq.size());
+
+		IntegerSequenceSweep seq2 = new IntegerSequenceSweep("p1", 0, 1, 1);
+		assertEquals(2, seq2.size());
 	}
 
 }

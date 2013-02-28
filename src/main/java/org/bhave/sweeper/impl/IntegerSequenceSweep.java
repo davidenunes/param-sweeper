@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.commons.collections.iterators.TransformIterator;
 import org.apache.commons.configuration.Configuration;
 import org.bhave.sweeper.SequenceSweep;
-import org.bhave.sweeper.T;
 
 public class IntegerSequenceSweep implements SequenceSweep<Integer> {
 
@@ -26,11 +25,18 @@ public class IntegerSequenceSweep implements SequenceSweep<Integer> {
 	 * @param step
 	 *            the step to update the sequence
 	 */
-	public IntegerSequenceSweep(String param, int from, int to, int step) {
+	public IntegerSequenceSweep(String param, int from, int to, int step)
+			throws IllegalArgumentException {
 		this.from = from;
 		this.to = to;
 		this.step = step;
 		this.param = param;
+
+		if (step == 0)
+			throw new IllegalArgumentException("step cannot be 0");
+		if ((to > from && step < 0) || to < from && step > 0)
+			throw new IllegalArgumentException(
+					"step must be positive if to > from and negative if to < from");
 
 	}
 
@@ -66,13 +72,19 @@ public class IntegerSequenceSweep implements SequenceSweep<Integer> {
 			this.currentValue = from;
 		}
 
+		boolean canStep = true;
+
 		public boolean hasNext() {
-			return step > 0 ? currentValue <= to : currentValue >= to;
+			if (!canStep)
+				return false;
+			return step >= 0 ? currentValue <= to : currentValue >= to;
 		}
 
 		public Integer next() {
 			int result = currentValue;
-
+			if (step == 0) {
+				canStep = false;
+			}
 			currentValue += step;
 
 			return result;
@@ -142,4 +154,13 @@ public class IntegerSequenceSweep implements SequenceSweep<Integer> {
 		return new IntegerSequenceIterator();
 	}
 
+	@Override
+	public int size() {
+		int diff = Math.abs(to - from);
+
+		if (!(to < 0 && from > 0 || to > 0 && from < 0)) {
+			diff++;
+		}
+		return diff / Math.abs(step);
+	}
 }

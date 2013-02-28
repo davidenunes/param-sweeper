@@ -26,4 +26,6 @@ public interface ParameterSpace extends Iterable<Configuration> {
 	 * @return the number of repetitions for each parameter combination
 	 */
 	int getNumRuns();
+	
+	int size();
 }

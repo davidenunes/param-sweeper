@@ -1,6 +1,5 @@
 package org.bhave.sweeper;
 
-import java.util.Iterator;
 import java.util.List;
 
 public interface ListSweep<T> extends ParameterSweep {
@@ -10,6 +9,5 @@ public interface ListSweep<T> extends ParameterSweep {
 	 * @return a list with different parameter values
 	 */
 	List<T> getValueList();
-
 
 }
