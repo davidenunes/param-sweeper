@@ -50,6 +50,9 @@ CombinedParameterSweep paramSpace = ParameterSweepUtil.createCombinedSweep(sweep
 for (Configuration config : paramSpace) {
   //do stuff with the values in the configuration for example
   int v1 = config.getInt("p1");
+  int v2 = config.getInt("p2");
+  int v3 = config.getString("p5");
+  //... etc
 }
 
 
