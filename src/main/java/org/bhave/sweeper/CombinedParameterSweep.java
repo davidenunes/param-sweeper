@@ -50,7 +50,7 @@ import org.apache.commons.configuration.Configuration;
  * @author Davide Nunes
  *
  */
-public interface ParameterSpace extends Iterable<Configuration> {
+public interface CombinedParameterSweep extends Iterable<Configuration> {
 
     /**
      * Sets the number of runs for each parameter combination. The default

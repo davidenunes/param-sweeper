@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
-import org.bhave.sweeper.impl.CombinedParameterSweep;
+import org.bhave.sweeper.impl.DefaultCombinedParameterSweep;
 import org.bhave.sweeper.impl.ListSweep;
 import org.bhave.sweeper.impl.SingleValueSweep;
 import org.junit.Test;
@@ -44,20 +44,25 @@ public class ValueListSweepTest {
 		values.add(10);
 
 		ListSweep<Integer> sweep = new ListSweep<>("p1", values);
+                
+                
 		SingleValueSweep<Integer> sweep2 = new SingleValueSweep<Integer>("p2",
 				1);
 
 		assertEquals(values.size(), sweep.size());
 
+                ParameterSweep sweep3 = ParameterSweepUtil.<Integer>createSweep("p3", values);
+                
 		List<ParameterSweep> params = new ArrayList<>();
 		params.add(sweep);
 		params.add(sweep2);
+                params.add(sweep3);
 
-		CombinedParameterSweep space = new CombinedParameterSweep(params, 3);
+		DefaultCombinedParameterSweep space = new DefaultCombinedParameterSweep(params, 3);
 
 		for (Configuration config : space) {
 			System.out.println("[" + config.getInt("p1") + ","
-					+ config.getInt("p2") + "]");
+					+ config.getInt("p2") + ","+config.getInt("p3")+"]");
 		}
 
 	}

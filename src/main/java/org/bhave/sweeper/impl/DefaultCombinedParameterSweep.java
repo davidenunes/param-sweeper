@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.bhave.sweeper.ParameterSpace;
+import org.bhave.sweeper.CombinedParameterSweep;
 import org.bhave.sweeper.ParameterSweep;
 
 /**
@@ -54,12 +54,12 @@ import org.bhave.sweeper.ParameterSweep;
  *
  * </p>
  */
-public class CombinedParameterSweep implements ParameterSpace {
+public class DefaultCombinedParameterSweep implements CombinedParameterSweep {
 
     private List<ParameterSweep> params;
     private int runs;
 
-    public CombinedParameterSweep(List<ParameterSweep> params, int numRuns) {
+    public DefaultCombinedParameterSweep(List<ParameterSweep> params, int numRuns) {
         this.params = new ArrayList<>(params);
         this.runs = numRuns;
     }
