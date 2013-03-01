@@ -1,4 +1,4 @@
-bhave.sweeper
+B-have Sweeper
 =============
 
 A Parameter Sweeping Utility Library. This library is intended to easily create parameter sweeps for simulation models in Java. 
