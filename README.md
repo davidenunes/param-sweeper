@@ -65,7 +65,7 @@ Current version is 1.0
 * [bhave.sweeper-1.0-javadoc.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0-javadoc.jar)
 
 ## Dependencies
-**Note:** the above jar with dependencies contains all of the following dependencies included:
+**Note:** the above jar with dependencies includes all of the following dependencies:
 * commons-configuration-1.9
   * commons-logging-1.1.1
   * commons-lang-2.6
