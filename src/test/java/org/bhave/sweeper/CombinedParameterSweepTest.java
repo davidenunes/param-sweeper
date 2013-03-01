@@ -1,19 +1,17 @@
 package org.bhave.sweeper;
 
-import static org.junit.Assert.*;
-
 import java.util.LinkedList;
 import java.util.List;
-
 import org.apache.commons.configuration.Configuration;
-import org.bhave.sweeper.ParameterSweep;
 import org.bhave.sweeper.impl.CombinedParameterSweep;
 import org.bhave.sweeper.impl.IntegerSequenceSweep;
 import org.bhave.sweeper.impl.SingleValueSweep;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class CombinedParameterSweepTest {
 
+        @Test
 	public void test() {
 		IntegerSequenceSweep sweep1 = new IntegerSequenceSweep("p1", 0, -1, -1);
 		assertEquals(2, sweep1.size());
@@ -63,5 +61,6 @@ public class CombinedParameterSweepTest {
 		}
 
 		assertEquals((sweep.size() * sweepSeq.size())*4, paramSpace.size());
+                
 	}
 }
