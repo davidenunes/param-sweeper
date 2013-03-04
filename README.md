@@ -43,7 +43,8 @@ sweeps.add(sweepSequence2);
 sweeps.add(sweepSingleValue3);
 sweeps.add(sweepList);
 
-
+//2 in this case is the number of runs for each parameter combination
+//the CombinedParameterSweep Iterator will present each configuration twice
 CombinedParameterSweep paramSpace = ParameterSweepUtil.createCombinedSweep(sweeps,2);
 
 //iterate over possible configurations
