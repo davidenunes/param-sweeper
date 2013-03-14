@@ -194,7 +194,7 @@ public class DefaultCombinedParameterSweep implements CombinedParameterSweep {
 			// create a new configuration copy
 			PropertiesConfiguration result = new PropertiesConfiguration();
 			result.copy(config);
-			result.addProperty(RUN_PARAM, (currentNumRuns + 1));
+			result.setProperty(RUN_PARAM, (currentNumRuns + 1));
 
 			currentNumRuns = (currentNumRuns + 1) % runs;
 			numConfigs++;
