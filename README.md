@@ -63,10 +63,10 @@ for (Configuration config : paramSpace) {
 ## Latest releases
 
 Current version is 1.0
-* [bhave.sweeper-1.0-with-dependencies.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0-jar-with-dependencies.jar)
-* [bhave.sweeper-1.0.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0.jar)
-* [bhave.sweeper-1.0-sources.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0-sources.jar)
-* [bhave.sweeper-1.0-javadoc.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0-javadoc.jar)
+* [bhave.sweeper-1.0-with-dependencies.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0-SNAPSHOT-jar-with-dependencies.jar)
+* [bhave.sweeper-1.0.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0-SNAPSHOT.jar)
+* [bhave.sweeper-1.0-sources.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0-SNAPSHOT-sources.jar)
+* [bhave.sweeper-1.0-javadoc.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0-SNAPSHOT-javadoc.jar)
 
 ## Dependencies
 **Note:** the above jar with dependencies includes all of the following dependencies:
