@@ -23,8 +23,8 @@
  */
 package org.bhave.sweeper;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
@@ -73,5 +73,11 @@ public class DoubleSequenceSweepTest {
 		for (Configuration config : seq) {
 			System.out.println(config.getDouble("p1"));
 		}
+	}
+	
+	@Test
+	public void testSweepSize(){
+		DoubleSequenceSweep seq = new DoubleSequenceSweep("p1", 0, 0.05, 0.05);
+		assertEquals(2, seq.size());
 	}
 }

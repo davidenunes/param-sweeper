@@ -88,4 +88,49 @@ public class CombinedParameterSweepTest {
 		assertEquals((sweep.size() * sweepSeq.size()) * 5, paramSpace.size());
 
 	}
+
+	@Test
+	public void testSize() {
+		CombinedParameterSweep params = null;
+		ParameterSweep influence = ParameterSweepUtil.createSweep("influence",
+				0.5);
+		ParameterSweep numAgents = ParameterSweepUtil.createSweep("numAgents",
+				300);
+		ParameterSweep maxCycles = ParameterSweepUtil.createSweep("cycles",
+				3000);
+		ParameterSweep numContexts = ParameterSweepUtil.createSweep(
+				"numContexts", 2);
+		ParameterSweep initialUncertainty = ParameterSweepUtil.createSweep(
+				"uncertainty", 1.4);
+
+		// network models
+		ParameterSweep model0 = ParameterSweepUtil.createSweep("model0", "reg");
+		ParameterSweep model1 = ParameterSweepUtil.createSweep("model1", "reg");
+		// network model parameters
+
+		ParameterSweep model0P = ParameterSweepUtil.createSweep("k", "k1");
+		ParameterSweep model1P = ParameterSweepUtil.createSweep("k", "k2");
+
+		// context switching values
+		ParameterSweep cs0 = ParameterSweepUtil.createSweep("cs0", 0.0, 0.05,
+				0.05);
+		ParameterSweep cs1 = ParameterSweepUtil.createSweep("cs1", 1);
+
+		List<ParameterSweep> sweeps = new LinkedList<>();
+		sweeps.add(influence);
+		sweeps.add(numAgents);
+		sweeps.add(maxCycles);
+		sweeps.add(numContexts);
+		sweeps.add(model0);
+		sweeps.add(model0P);
+		sweeps.add(model1);
+		sweeps.add(model1P);
+		sweeps.add(cs0);
+		sweeps.add(cs1);
+		sweeps.add(initialUncertainty);
+
+		params = ParameterSweepUtil.createCombinedSweep(sweeps, 30);
+		assertEquals(30 * 2, params.size());
+
+	}
 }
