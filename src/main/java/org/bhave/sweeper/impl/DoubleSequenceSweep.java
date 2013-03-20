@@ -135,7 +135,7 @@ public class DoubleSequenceSweep implements SequenceSweep<Double> {
 				return false;
 			}
 
-			return step.signum() >= 0 ? currentValue.compareTo(to) <= 0
+			return step.signum() > 0 ? currentValue.compareTo(to) <= 0
 					: currentValue.compareTo(to) >= 0;
 		}
 
@@ -148,6 +148,7 @@ public class DoubleSequenceSweep implements SequenceSweep<Double> {
 				canStep = false;
 			}
 			currentValue = currentValue.add(step);
+			currentValue = currentValue.round(MathContext.DECIMAL32);
 
 			return result;
 		}

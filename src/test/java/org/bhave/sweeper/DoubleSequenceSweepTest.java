@@ -68,7 +68,7 @@ public class DoubleSequenceSweepTest {
 
 	@Test
 	public void testAdditionalDecimalPlaces() {
-		DoubleSequenceSweep seq = new DoubleSequenceSweep("p1", 0, 1, 0.005);
+		DoubleSequenceSweep seq = new DoubleSequenceSweep("p1", 0, 1, 0.05);
 
 		for (Configuration config : seq) {
 			System.out.println(config.getDouble("p1"));
