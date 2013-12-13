@@ -44,6 +44,31 @@ public class SweepLoaderTest {
 			i++;
 		}
 
+		// test sweep size and loading utility
+		ParameterSweep sweep0 = sweeps.get(0);
+		assertEquals(1, sweep0.size());
+		
+		ParameterSweep sweep1 = sweeps.get(1);
+		assertEquals(10, sweep1.size());
+		
+		//0 to 10 -> step 0.5  [0,..,10]
+		ParameterSweep sweep2 = sweeps.get(2);
+		assertEquals(21, sweep2.size());
+		
+
+		int totalRuns = 1;
+		for (ParameterSweep sweep : sweeps) {
+			totalRuns *= sweep.size();
+		}
+
+		int runs = 2;
+
+		CombinedParameterSweep combinedSweep = ParameterSweepUtil
+				.loadCombinedSweep(file, runs);
+
+		assertEquals(totalRuns * runs, combinedSweep.size());
+
+		System.out.println(combinedSweep.size());
 	}
 
 }

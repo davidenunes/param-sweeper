@@ -58,15 +58,33 @@ for (Configuration config : paramSpace) {
 
 
 ```
+## Loading Parameter Spaces from Files
+To make this library more flexible when used with other packages. We added a `ParameterSweep` loader. This can be used either by 
+creating a `SweepLoader` instance and using the appropriate method to load the parameters or by using the `ParameterSweepUtil` to 
+load sweeps from a file or create `CombinedParameterSweep` objects directly using that file.
+
+```java
+//loading a list of Parameter Seeps from a file
+
+SweepLoader sweepLoader = new SweepLoader();
+List<ParameterSweep> sweeps = sweepLoader.fromFile(file);
+
+//creating a combined sweep using the parameter sweep utility
+int runs = 30;
+
+CombinedParameterSweep combinedSweep = ParameterSweepUtil.loadCombinedSweep(file, runs);
+
+
+```
 
 
 ## Latest releases
 
 Current version is 1.0
-* [bhave.sweeper-1.0-with-dependencies.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0-SNAPSHOT-jar-with-dependencies.jar)
-* [bhave.sweeper-1.0.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0-SNAPSHOT.jar)
-* [bhave.sweeper-1.0-sources.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0-SNAPSHOT-sources.jar)
-* [bhave.sweeper-1.0-javadoc.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-1.0-SNAPSHOT-javadoc.jar)
+* [bhave.sweeper-1.0-with-dependencies.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT-jar-with-dependencies.jar)
+* [bhave.sweeper-1.0.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT.jar)
+* [bhave.sweeper-1.0-sources.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT-sources.jar)
+* [bhave.sweeper-1.0-javadoc.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT-javadoc.jar)
 
 ## Dependencies
 **Note:** the above jar with dependencies includes all of the following dependencies:

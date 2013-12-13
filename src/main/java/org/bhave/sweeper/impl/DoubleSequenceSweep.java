@@ -23,7 +23,6 @@
 package org.bhave.sweeper.impl;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -38,226 +37,231 @@ import org.bhave.sweeper.SequenceSweep;
  * Implements the {@link SequenceSweep} Interface to provide a simple way to
  * create sequences of Double values.
  * </p>
- *
+ * 
  * <p>
  * These Objects can also be created using the
  * {@link ParameterSweepUtil#createSweep(java.lang.String, double, double, double) }
  * .
  * </p>
- *
+ * 
  * @see ParameterSweepUtil
- *
+ * 
  * @author Davide Nunes
  */
 public class DoubleSequenceSweep implements SequenceSweep<Double> {
 
-    private final BigDecimal from;
-    private final BigDecimal to;
-    private final BigDecimal step;
-    private final String param;
+	private final BigDecimal from;
+	private final BigDecimal to;
+	private final BigDecimal step;
+	private final String param;
 
-    /**
-     * Constructor for this immutable Integer Sequence Sweep
-     *
-     * @param from the first item in the sequence
-     * @param to the last item in the sequence
-     * @param step the step to update the sequence
-     */
-    public DoubleSequenceSweep(String param, double from, double to, double step)
-            throws IllegalArgumentException {
-        this.from = BigDecimal.valueOf(from);
-        this.to = BigDecimal.valueOf(to);
-        this.step = BigDecimal.valueOf(step);
-        this.param = param;
+	/**
+	 * Constructor for this immutable Integer Sequence Sweep
+	 * 
+	 * @param from
+	 *            the first item in the sequence
+	 * @param to
+	 *            the last item in the sequence
+	 * @param step
+	 *            the step to update the sequence
+	 */
+	public DoubleSequenceSweep(String param, double from, double to, double step)
+			throws IllegalArgumentException {
+		this.from = BigDecimal.valueOf(from);
+		this.to = BigDecimal.valueOf(to);
+		this.step = BigDecimal.valueOf(step);
+		this.param = param;
 
+		if (step == 0) {
+			throw new IllegalArgumentException("step cannot be 0");
+		}
+		if ((to > from && step < 0) || to < from && step > 0) {
+			throw new IllegalArgumentException(
+					"step must be positive if to > from and negative if to < from");
+		}
 
+	}
 
-        if (step == 0) {
-            throw new IllegalArgumentException("step cannot be 0");
-        }
-        if ((to > from && step < 0) || to < from && step > 0) {
-            throw new IllegalArgumentException(
-                    "step must be positive if to > from and negative if to < from");
-        }
+	@Override
+	public String getParameterName() {
+		return param;
+	}
 
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public Iterator<Configuration> iterator() {
+		TransformIterator it = new TransformIterator(
+				new DoubleSequenceIterator(),
+				new ConfigurationTranformer(param));
 
-    @Override
-    public String getParameterName() {
-        return param;
-    }
+		return it;
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public Iterator<Configuration> iterator() {
-        TransformIterator it = new TransformIterator(
-                new DoubleSequenceIterator(),
-                new ConfigurationTranformer(param));
+	@Override
+	public Double from() {
+		return from.doubleValue();
+	}
 
-        return it;
-    }
+	@Override
+	public Double to() {
+		return to.doubleValue();
+	}
 
-    @Override
-    public Double from() {
-        return from.doubleValue();
-    }
+	@Override
+	public Double step() {
+		return step.doubleValue();
+	}
 
-    @Override
-    public Double to() {
-        return to.doubleValue();
-    }
+	/**
+	 * An iterator that generates a sequence of Double objects on demand. This
+	 * means that the actual sequence is not generated until the next method is
+	 * called.
+	 */
+	private class DoubleSequenceIterator implements Iterator<Double> {
 
-    @Override
-    public Double step() {
-        return step.doubleValue();
-    }
+		private Iterator<Configuration> stepper;
 
-    /**
-     * An iterator that generates a sequence of Double objects on demand. This
-     * means that the actual sequence is not generated until the next method is
-     * called.
-     */
-    private class DoubleSequenceIterator implements Iterator<Double> {
+		public DoubleSequenceIterator() {
+			BigDecimal.valueOf(from.doubleValue());
+			// to minimise rounding errors this IntegerSequence does the
+			// stepping instead
+			// the next double value is computed by from + (step * stepper.next)
+			IntegerSequenceSweep integerSeq = new IntegerSequenceSweep(param,
+					0, // From
+					(int) Math.rint((to.doubleValue() - from.doubleValue())
+							/ step.doubleValue()), // to
+					1); // step
+			stepper = integerSeq.iterator();
+		}
 
-        private BigDecimal currentValue;
-        private Iterator<Configuration> stepper;
+		boolean canStep = true;
 
-        public DoubleSequenceIterator() {
-            this.currentValue = BigDecimal.valueOf(from.doubleValue());
-            //to minimise rounding errors this IntegerSequence does the stepping instead
-            //the next double value is computed by from + (step * stepper.next) 
-            IntegerSequenceSweep integerSeq =
-                    new IntegerSequenceSweep(param, 0, //From
-                    (int) Math.rint((to.doubleValue() - from.doubleValue()) / step.doubleValue()), //to
-                    1); //step
-            stepper = integerSeq.iterator();
-        }
-        boolean canStep = true;
+		@Override
+		public boolean hasNext() {
+			if (!canStep) {
+				return false;
+			}
 
-        @Override
-        public boolean hasNext() {
-            if (!canStep) {
-                return false;
-            }
+			return stepper.hasNext();
+		}
 
-            return stepper.hasNext();
-        }
+		@Override
+		public Double next() {
+			double result;
 
-        @Override
-        public Double next() {
-            double result;
+			if (step.signum() == 0) {
+				canStep = false;
+			}
 
-            if (step.signum() == 0) {
-                canStep = false;
-            }
+			result = step
+					.multiply(new BigDecimal(stepper.next().getInt(param)))
+					.add(from).doubleValue();
+			BigDecimal.valueOf(result);
 
-            result = step.multiply(new BigDecimal(stepper.next().getInt(param))).add(from).doubleValue();
-            currentValue = BigDecimal.valueOf(result);
+			return result;
+		}
 
-            return result;
-        }
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException(
+					"You cannot remove items from a sweep");
+		}
+	}
 
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException(
-                    "You cannot remove items from a sweep");
-        }
-    }
+	/**
+	 * Constructs the whole Sequence and returns it as a list
+	 */
+	@Override
+	public List<Double> getValues() {
+		Iterator<Double> it = new DoubleSequenceIterator();
+		List<Double> values = new ArrayList<>();
+		while (it.hasNext()) {
+			values.add(it.next());
+		}
 
-    /**
-     * Constructs the whole Sequence and returns it as a list
-     */
-    @Override
-    public List<Double> getValues() {
-        Iterator<Double> it = new DoubleSequenceIterator();
-        List<Double> values = new ArrayList<>();
-        while (it.hasNext()) {
-            values.add(it.next());
-        }
+		return values;
+	}
 
-        return values;
-    }
+	@Override
+	public String toString() {
+		return "[from:" + from + ", to:" + to + ", step:" + step + "]";
 
-    @Override
-    public String toString() {
-        return "[from:" + from + ", to:" + to + ", step:" + step + "]";
+	}
 
-    }
+	/**
+	 * Returns an iterator over the possible Double values generator by this
+	 * Parameter Sweep
+	 * 
+	 * @return an Iterator over Double objects
+	 */
+	@Override
+	public Iterator<Double> valueIterator() {
+		return new DoubleSequenceIterator();
+	}
 
-    /**
-     * Returns an iterator over the possible Double values generator by this
-     * Parameter Sweep
-     *
-     * @return an Iterator over Double objects
-     */
-    @Override
-    public Iterator<Double> valueIterator() {
-        return new DoubleSequenceIterator();
-    }
+	@Override
+	public int size() {
+		BigDecimal diff = to.subtract(from).abs();
 
-    @Override
-    public int size() {
-        BigDecimal diff = to.subtract(from).abs();
+		int size = diff.divide(step.abs(), RoundingMode.FLOOR).intValue();
 
-        int size = diff.divide(step.abs(), RoundingMode.FLOOR).intValue();
+		return (!(to.compareTo(BigDecimal.ZERO) < 0
+				&& from.compareTo(BigDecimal.ZERO) > 0 || to
+				.compareTo(BigDecimal.ZERO) > 0
+				&& from.compareTo(BigDecimal.ZERO) < 0)) ? (size + 1) : size;
+	}
 
-        return (!(to.compareTo(BigDecimal.ZERO) < 0
-                && from.compareTo(BigDecimal.ZERO) > 0 || to
-                .compareTo(BigDecimal.ZERO) > 0
-                && from.compareTo(BigDecimal.ZERO) < 0)) ? (size + 1) : size;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((from == null) ? 0 : from.hashCode());
+		result = prime * result + ((param == null) ? 0 : param.hashCode());
+		result = prime * result + ((step == null) ? 0 : step.hashCode());
+		result = prime * result + ((to == null) ? 0 : to.hashCode());
+		return result;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((from == null) ? 0 : from.hashCode());
-        result = prime * result + ((param == null) ? 0 : param.hashCode());
-        result = prime * result + ((step == null) ? 0 : step.hashCode());
-        result = prime * result + ((to == null) ? 0 : to.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        DoubleSequenceSweep other = (DoubleSequenceSweep) obj;
-        if (from == null) {
-            if (other.from != null) {
-                return false;
-            }
-        } else if (!from.equals(other.from)) {
-            return false;
-        }
-        if (param == null) {
-            if (other.param != null) {
-                return false;
-            }
-        } else if (!param.equals(other.param)) {
-            return false;
-        }
-        if (step == null) {
-            if (other.step != null) {
-                return false;
-            }
-        } else if (!step.equals(other.step)) {
-            return false;
-        }
-        if (to == null) {
-            if (other.to != null) {
-                return false;
-            }
-        } else if (!to.equals(other.to)) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		DoubleSequenceSweep other = (DoubleSequenceSweep) obj;
+		if (from == null) {
+			if (other.from != null) {
+				return false;
+			}
+		} else if (!from.equals(other.from)) {
+			return false;
+		}
+		if (param == null) {
+			if (other.param != null) {
+				return false;
+			}
+		} else if (!param.equals(other.param)) {
+			return false;
+		}
+		if (step == null) {
+			if (other.step != null) {
+				return false;
+			}
+		} else if (!step.equals(other.step)) {
+			return false;
+		}
+		if (to == null) {
+			if (other.to != null) {
+				return false;
+			}
+		} else if (!to.equals(other.to)) {
+			return false;
+		}
+		return true;
+	}
 }

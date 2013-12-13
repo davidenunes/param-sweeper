@@ -22,13 +22,16 @@
  */
 package org.bhave.sweeper;
 
+import java.io.File;
 import java.util.List;
+
 import org.apache.commons.configuration.Configuration;
 import org.bhave.sweeper.impl.DefaultCombinedParameterSweep;
 import org.bhave.sweeper.impl.DoubleSequenceSweep;
 import org.bhave.sweeper.impl.IntegerSequenceSweep;
 import org.bhave.sweeper.impl.ListSweep;
 import org.bhave.sweeper.impl.SingleValueSweep;
+import org.bhave.sweeper.impl.SweepLoader;
 
 /**
  * <p>
@@ -226,5 +229,86 @@ public class ParameterSweepUtil {
 	public static CombinedParameterSweep createCombinedSweep(
 			List<ParameterSweep> sweeps, int runs) {
 		return new DefaultCombinedParameterSweep(sweeps, runs);
+	}
+
+	/**
+	 * Creates a {@link CombinedParameterSweep} instance from a given file
+	 * containing sweep information.
+	 * 
+	 * @see SweepLoader
+	 * 
+	 * @param filename
+	 *            the name of the file being loaded
+	 * @param runs
+	 *            number of runs per configuration
+	 * @return a CombinedParameter sweep with all the parameter sweeps defined
+	 *         in the given file
+	 */
+	public static CombinedParameterSweep loadCombinedSweep(String filepath,
+			int runs) {
+		File file = new File(filepath);
+		return loadCombinedSweep(file, runs);
+
+	}
+
+	/**
+	 * Creates a {@link CombinedParameterSweep} instance from a given file
+	 * containing sweep information.
+	 * 
+	 * @see SweepLoader
+	 * 
+	 * @param file
+	 *            the file object from which the parameter sweeps are to be
+	 *            loaded
+	 * @param runs
+	 *            number of runs per configuration
+	 * @return a CombinedParameter sweep with all the parameter sweeps defined
+	 *         in the given file
+	 */
+	public static CombinedParameterSweep loadCombinedSweep(File file, int runs) {
+		SweepLoader loader = new SweepLoader();
+		List<ParameterSweep> sweeps = loader.fromFile(file);
+		CombinedParameterSweep sweep = createCombinedSweep(sweeps, runs);
+		return sweep;
+	}
+
+
+	/**
+	 * Loads a list of {@link ParameterSweep} objects from a given file
+	 * according to the order they were defined. To consult the syntax of
+	 * parameter sweep files, consult the documentation of {@link SweepLoader}.
+	 * 
+	 * @see SweepLoader
+	 * 
+	 * @param file
+	 *            the file object from which the parameter sweeps are to be
+	 *            loaded
+	 * @param runs
+	 *            number of runs per configuration
+	 * @return a list of sweeps defined in a given file.
+	 */
+	public static List<ParameterSweep> loadSweeps(String filepath) {
+		File file = new File(filepath);
+		return loadSweeps(file);
+	}
+
+	/**
+	 * Loads a list of {@link ParameterSweep} objects from a given file
+	 * according to the order they were defined. To consult the syntax of
+	 * parameter sweep files, consult the documentation of {@link SweepLoader}.
+	 * 
+	 * @see SweepLoader
+	 * 
+	 * @param file
+	 *            the file object from which the parameter sweeps are to be
+	 *            loaded
+	 * @param runs
+	 *            number of runs per configuration
+	 * @return a list of sweeps defined in a given file.
+	 */
+	public static List<ParameterSweep> loadSweeps(File file) {
+		SweepLoader loader = new SweepLoader();
+		List<ParameterSweep> sweeps = loader.fromFile(file);
+		return sweeps;
 	}
 }
