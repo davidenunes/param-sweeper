@@ -77,14 +77,45 @@ CombinedParameterSweep combinedSweep = ParameterSweepUtil.loadCombinedSweep(file
 
 ```
 
+A typical parameter sweep file looks like this:
+
+```
+# Parameter Sweep File
+
+# Parameters 
+params.0.name = p1-single
+params.0.sweep = single
+params.0.type = int
+params.0.value = 15
+
+params.1.name = p2-list
+params.1.sweep = list
+params.1.type = int
+params.1.value = 1,2,3,4,5,6,7,8,9,10
+
+params.2.name = p3-sequence
+params.2.sweep = sequence
+params.2.type = double
+params.2.value.from = 0.0
+params.2.value.to = 10.0
+params.2.value.step = 0.5
+```
+
+For each parameter, you must provide:
+
+* string that identifies uniquely the parameter as its `name`
+* a `type of sweep` which can be `single`, `list` or `sequence`
+* a `data type` which determines what value types are expected in this parameter sweep
+* a `value` which can be a single vale a list of values or a sequence defined using the `from`, `to` to define the range of the sequence and the `step` which defines the intermediate values of the sequence. 
+
 
 ## Latest releases
 
-Current version is 1.0
-* [bhave.sweeper-1.0-with-dependencies.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT-jar-with-dependencies.jar)
-* [bhave.sweeper-1.0.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT.jar)
-* [bhave.sweeper-1.0-sources.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT-sources.jar)
-* [bhave.sweeper-1.0-javadoc.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT-javadoc.jar)
+Current version is 2.0
+* [bhave.sweeper-2.0-with-dependencies.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT-jar-with-dependencies.jar)
+* [bhave.sweeper-2.0.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT.jar)
+* [bhave.sweeper-2.0-sources.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT-sources.jar)
+* [bhave.sweeper-2.0-javadoc.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT-javadoc.jar)
 
 ## Dependencies
 **Note:** the above jar with dependencies includes all of the following dependencies:
