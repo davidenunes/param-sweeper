@@ -44,7 +44,7 @@ import org.bhave.sweeper.ParameterSweep;
  * @author Davide Nunes
  * 
  */
-public class SweepLoader {
+public class SweepLoader {	
 	public List<ParameterSweep> fromFile(String filename) {
 		File sweepFile = new File(filename);
 		return fromFile(sweepFile);
