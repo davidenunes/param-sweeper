@@ -103,10 +103,10 @@ params.2.value.step = 0.5
 
 For each parameter, you must provide:
 
-* string that identifies uniquely the parameter as its `name`
-* a `type of sweep` which can be `single`, `list` or `sequence`
-* a `data type` which determines what value types are expected in this parameter sweep
-* a `value` which can be a single vale a list of values or a sequence defined using the `from`, `to` to define the range of the sequence and the `step` which defines the intermediate values of the sequence. 
+* string that identifies uniquely the parameter as its `name`;
+* a `type of sweep` which can be `single`, `list` or `sequence`;
+* a `data type` which determines the type of the values: this can be `int`, `double`, `string`, or `boolean`;
+* a `value` which can be a single vale a list of values or a sequence defined using the `from`, `to` to define the range of the sequence and the `step` which defines the intermediate values of the sequence;
 
 
 ## Latest releases
