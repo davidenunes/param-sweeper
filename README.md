@@ -1,4 +1,4 @@
-B-have Sweeper
+Param Sweeper
 =============
 
 A Parameter Sweeping Utility Library. This library is intended to easily create parameter sweeps for simulation models in Java. 
@@ -109,16 +109,7 @@ For each parameter, you must provide:
 * a `value` which can be a single vale a list of values or a sequence defined using the `from`, `to` to define the range of the sequence and the `step` which defines the intermediate values of the sequence;
 
 
-## Latest releases
-
-Current version is 2.0
-* [bhave.sweeper-2.0-with-dependencies.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT-jar-with-dependencies.jar)
-* [bhave.sweeper-2.0.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT.jar)
-* [bhave.sweeper-2.0-sources.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT-sources.jar)
-* [bhave.sweeper-2.0-javadoc.jar](http://dl.dropbox.com/u/336879/Projects/Releases/bhave.sweeper/sweeper-2.0-SNAPSHOT-javadoc.jar)
-
 ## Dependencies
-**Note:** the above jar with dependencies includes all of the following dependencies:
 * commons-configuration-1.9
   * commons-logging-1.1.1
   * commons-lang-2.6
@@ -129,15 +120,14 @@ Current version is 2.0
  B-Have Sweeper Library
  
  * Copyright (C) 2013 Davide Nunes 
- * Authors : Davide Nunes <davex.pt@gmail.com>
- * Website : http://bhaveproject.org
+ * Authors : Davide Nunes - davidelnunes@gmail.com
  
- The b-have sweeper library is free software: you can redistribute it and/or modify
+ The param-sweeper library is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- The b-have sweeper library is distributed in the hope that it will be useful,
+ The param-sweeper library is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
