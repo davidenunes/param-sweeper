@@ -117,7 +117,7 @@ For each parameter, you must provide:
 
 
 ## Licence
- B-Have Sweeper Library
+ Param Sweeper Library
  
  * Copyright (C) 2013 Davide Nunes 
  * Authors : Davide Nunes - davidelnunes@gmail.com
